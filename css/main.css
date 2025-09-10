@@ -342,6 +342,19 @@ header {
 footer {
 	margin-top: var(--wide-margin);
 	text-align: center;
+
+	&>p {
+		font-size: 0.85em;
+
+		&>span:last-child {
+			&::before {
+				content: " | ";
+				margin-right: 0.25em;
+				margin-left: 0.25em;
+				color: #aaa;
+			}
+		}
+	}
 }
 
 form#pak-add-file {

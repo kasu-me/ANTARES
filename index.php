@@ -130,7 +130,8 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 		?>
 	</main>
 	<footer>
-		&copy;2025 AhozuraNS Project
+		<div>&copy;2025 AhozuraNS Project</div>
+		<p><span><a href="https://github.com/kasu-me/ANTARES/blob/main/README.md" target="_blank">About ANTARES</a></span><span><a href="https://github.com/kasu-me/ANTARES/releases" target="_blank">Releases</a></span></p>
 	</footer>
 	<form id="pak-add-file"><input type="file" id="input-file" name="uploadfile" accept=".zip,.pak"><input type="submit" id="pak-add-file-submit"></form>
 	<template>
