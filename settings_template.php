@@ -25,7 +25,7 @@ $SIMUTRANS_LOG_PATH=$SIMUTRANS_DIR."/simutrans.log";//サーバのログ出力�
 
 //pak追加申請関連
 $TEMPORARY_PAK_FILE_DIRECTORY_PATH="/home/example/pak/files";//追加申請されたpakを一時的に置いておくディレクトリのパス
-$TEMPORARY_PAK_FILE_LIST_PATH="/home/example/pak/pak-list";//追加申請されたpakのリストファイルのパス
+$TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH="/home/example/pak/pak-list.csv";
 
 //Discord OAuth2設定
 $DISCORD_OAUTH2_CLIENT_ID="9999999999999999999";

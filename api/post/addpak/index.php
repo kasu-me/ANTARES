@@ -35,7 +35,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	);
 
 	//同じ名前のファイルが申請された場合は古い申請を削除
-	$temporaryPakFileList=file_get_contents($TEMPORARY_PAK_FILE_LIST_PATH);
+	$temporaryPakFileList=file_get_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH);
 	$deleteTarget="";
 	foreach (explode("\n",$temporaryPakFileList) as $key => $value) {
 		$addedPakInfo=explode(",",$value);
@@ -50,11 +50,11 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	if($deleteTarget!=""){
 		//申請リストから削除
 		$temporaryPakFileList=str_replace($deleteTarget."\n","",$temporaryPakFileList);
-		file_put_contents($TEMPORARY_PAK_FILE_LIST_PATH,$temporaryPakFileList);
+		file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$temporaryPakFileList);
 	}
 
 	//pak追加申請リストファイルに追記
-	file_put_contents($TEMPORARY_PAK_FILE_LIST_PATH,$_SESSION["name"].",".$_FILES["uploadfile"]['name'].",".$_POST["description"]."\n",FILE_APPEND);
+	file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$_SESSION["name"].",".$_FILES["uploadfile"]['name'].",".$_POST["description"]."\n",FILE_APPEND);
 
 	//ファイル配置に成功した場合
 	if( $result !== false ){

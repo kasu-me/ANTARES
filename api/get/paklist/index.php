@@ -5,7 +5,7 @@ include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
 include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 
 if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD] && in_array($_SESSION["name"],$ADMIN_USER_NAMES)){
-	$queues=explode("\n",trim(file_get_contents($TEMPORARY_PAK_FILE_LIST_PATH)));
+	$queues=explode("\n",trim(file_get_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH)));
 	
 	$result=[];
 	$result["list"]=[];

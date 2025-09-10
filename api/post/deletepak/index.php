@@ -19,7 +19,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	$fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$_POST["fileName"];
 
 	//pak追加申請リストファイルの読み込み
-	$temporaryPakFileList=file_get_contents($TEMPORARY_PAK_FILE_LIST_PATH);
+	$temporaryPakFileList=file_get_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH);
 	$deleteTarget="";
 	foreach (explode("\n",$temporaryPakFileList) as $key => $value) {
 		$addedPakInfo=explode(",",$value);
@@ -38,7 +38,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	}
 	//申請リストから削除
 	$temporaryPakFileList=str_replace($deleteTarget."\n","",$temporaryPakFileList);
-	file_put_contents($TEMPORARY_PAK_FILE_LIST_PATH,$temporaryPakFileList);
+	file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$temporaryPakFileList);
 	
 	//ファイル削除
 	exec("rm -rf ".$fileFullPath);
