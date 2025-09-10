@@ -144,7 +144,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 			</tr>
 		</thead>
 		<tr class="pak-list">
-			<td class="number"></td><td class="file-name"></td><td class="description"></td><td class="author"></td><td class="controll"></td>
+			<td class="number"></td><td class="file-name"></td><td class="description"></td><td class="author"></td><td class="controll"><button class="icon delete-button red"></button></td>
 		</tr>
 		<div class="message">
 			<div class="message-content"></div><div class="message-close-button icon"></div>

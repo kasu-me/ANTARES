@@ -306,7 +306,12 @@ window.addEventListener("load", () => {
 				tr.querySelector(".file-name").innerText = addedPakData.fileName;
 				tr.querySelector(".description").innerText = addedPakData.description;
 				tr.querySelector(".author").innerText = addedPakData.author;
-				tr.querySelector(".controll").innerText = "";
+				const deleteButton = tr.querySelector(".controll button.delete-button");
+				deleteButton.addEventListener("click", () => {
+					if (confirm(`本当に申請を取り下げてよろしいですか？この操作は取り消せません。(対象ファイル:${addedPakData.fileName})`)) {
+						deletePakList(addedPakData.fileName, deleteButton);
+					}
+				});
 				pakAddListTable.append(tr);
 			});
 			pakNotExistsMessageArea.innerHTML = "";
@@ -330,11 +335,28 @@ window.addEventListener("load", () => {
 			loading.classList.add("off");
 			Dialog.list.pakAddListDialog.functions.display(text);
 		}, (status) => {
-			pakAddListButton.classList.remove("disabled");
 			judgeByHTTPStatus(status);
+			pakAddListButton.classList.remove("disabled");
 		});
 	});
 
+	//申請取り下げ
+	function deletePakList(fileName, deleteButton) {
+		deleteButton.classList.add("disabled");
+		loading.classList.remove("off");
+		const formData = new FormData();
+		formData.append("fileName", fileName);
+		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/post/deletepak/`, "POST", formData, (text) => {
+			showMessage(`Pak追加申請を取り下げました。(対象ファイル:${fileName})`, "info");
+			deleteButton.classList.remove("disabled");
+			loading.classList.add("off");
+			Dialog.list.pakAddListDialog.off();
+		}, (status, text) => {
+			judgeByHTTPStatus(status, text);
+			deleteButton.classList.remove("disabled");
+			Dialog.list.pakAddListDialog.off();
+		});
+	}
 
 	//HTTPステータスコードによる処理振り分け
 	function judgeByHTTPStatus(httpStatus, messageJSON, isNotAllDisableButtons, target) {
