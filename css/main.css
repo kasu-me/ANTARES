@@ -326,6 +326,13 @@ header {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--standard-margin);
+
+	&>div {
+		&:nth-child(3) {
+			padding-left: var(--standard-margin);
+			border-left: 1px solid #ccc;
+		}
+	}
 }
 
 .foot-buttons {
@@ -400,9 +407,10 @@ form#pak-add-file {
 		&>div {
 			width: calc(50% - var(--standard-margin) / 2);
 
-			/* &:nth-child(3) {
-				width: 100%;
-			} */
+			&:nth-child(3) {
+				padding-left: 0;
+				border-left: none;
+			}
 		}
 	}
 
