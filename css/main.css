@@ -411,6 +411,10 @@ form#pak-add-file {
 				padding-left: 0;
 				border-left: none;
 			}
+
+			& button {
+				height: 100%;
+			}
 		}
 	}
 
