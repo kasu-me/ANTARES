@@ -131,6 +131,7 @@ table {
 	& td {
 		border-right: 1px solid var(--button-face);
 		padding: 0.5em;
+		word-break: break-all;
 
 		&:last-child {
 			border-right: 0;
