@@ -28,6 +28,18 @@ NetSimutransの運営者･参加者向けの各種操作のインタフェー�
 2. settings_template.phpをコピーし、settings.phpという名称に変更します。
 3. settings.phpの必要項目を入力します。
 4. 多分これで使えます
+## リリース履歴
+v1.0.5以降のリリース履歴は[Releases](https://github.com/kasu-me/ANTARES/releases)から参照してください。
+### v1.0.0
+* 暫定リリース
+### v1.0.1
+* 強制停止機能追加
+### v1.0.2
+* 再起動･アップデート内容投稿機能追加
+### v1.0.3
+* Pak追加申請機能追加
+### v1.0.4
+* 申請受理済みファイル一覧閲覧機能追加
 ## その他
 * UIのフォントに[LINE Seed](https://seed.line.me/index_jp.html)を利用しています。このフォントは[SIL OPEN FONT LICENSE](https://licenses.opensource.jp/OFL-1.1/OFL-1.1.html)に基づき提供されており、著作権はLINEヤフー株式会社が有しています。
 * アイコンフォントに[Segoe MDL2 Assets](https://learn.microsoft.com/ja-jp/windows/apps/design/style/segoe-ui-symbol-font)を利用しています。このフォントは[MITライセンス](https://opensource.org/license/mit)に基づき提供されており、著作権はMicrosoftが有しています。
