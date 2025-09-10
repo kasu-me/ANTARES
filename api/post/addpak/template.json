@@ -1,0 +1,13 @@
+{
+	"username": "",
+	"avatar_url": "",
+	"content": "",
+	"embeds": [
+		{
+			"title": "ℹ️ pak追加申請がありました",
+			"description": "申請内容は以下の通りです。",
+			"color": 3839959,
+			"fields": []
+		}
+	]
+}

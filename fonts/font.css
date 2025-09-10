@@ -1,0 +1,33 @@
+@font-face {
+	font-family: "SEGMDL2";
+	src: url("/fonts/SEGMDL2.TTF") format("TrueType");
+}
+
+/*!
+ * "LINE Seed" is lisenced under the SIL Open Font License 1.1
+ * by https://seed.line.me/
+ */
+@font-face {
+	font-family: 'LINESeed';
+	src: url('/fonts/LINESEEDJP_OTF_RG.OTF') format('opentype');
+}
+
+.icon {
+	font-family: 'SEGMDL2';
+}
+
+.icon-bef {
+	&::before {
+		content: attr(icon);
+		font-family: 'SEGMDL2';
+		display: inline-block;
+		vertical-align: -0.18em;
+		margin-right: 0.25em;
+	}
+
+	&.icon-rotate-right-90deg {
+		&::before {
+			transform: rotate(90deg) translateX(-2px);
+		}
+	}
+}
