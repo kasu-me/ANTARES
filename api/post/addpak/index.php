@@ -34,6 +34,25 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 		$fileFullPath
 	);
 
+	//同じ名前のファイルが申請された場合は古い申請を削除
+	$temporaryPakFileList=file_get_contents($TEMPORARY_PAK_FILE_LIST_PATH);
+	$deleteTarget="";
+	foreach (explode("\n",$temporaryPakFileList) as $key => $value) {
+		$addedPakInfo=explode(",",$value);
+		if(count($addedPakInfo)!=3){
+			continue;
+		}
+		if($addedPakInfo[1]==$_FILES["uploadfile"]['name']){
+			$deleteTarget=$value;
+			break;
+		}
+	}
+	if($deleteTarget!=""){
+		//申請リストから削除
+		$temporaryPakFileList=str_replace($deleteTarget."\n","",$temporaryPakFileList);
+		file_put_contents($TEMPORARY_PAK_FILE_LIST_PATH,$temporaryPakFileList);
+	}
+
 	//pak追加申請リストファイルに追記
 	file_put_contents($TEMPORARY_PAK_FILE_LIST_PATH,$_SESSION["name"].",".$_FILES["uploadfile"]['name'].",".$_POST["description"]."\n",FILE_APPEND);
 
