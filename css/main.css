@@ -257,6 +257,12 @@ header {
 		}
 	}
 
+	&:not(.message-info):not(.message-warn):not(.message-error) {
+		border: 1px solid #666666;
+		background-color: #f9f9f9;
+
+	}
+
 	&>.message-close-button {
 		cursor: pointer;
 		margin-left: 1.0rem;
