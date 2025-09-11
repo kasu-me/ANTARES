@@ -346,12 +346,13 @@ footer {
 	&>p {
 		font-size: 0.85em;
 
-		&>span:last-child {
-			&::before {
-				content: " | ";
-				margin-right: 0.25em;
-				margin-left: 0.25em;
-				color: #aaa;
+		&>span {
+			padding-left: 0.7em;
+			margin-left: 0.7em;
+			border-left: 1px solid #ccc;
+
+			&:first-child {
+				border-left: none;
 			}
 		}
 	}
