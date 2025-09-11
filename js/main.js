@@ -162,8 +162,8 @@ window.addEventListener("load", () => {
 			loading.classList.add("off");
 			reloadButton.classList.remove("disabled");
 			reloadButton.classList.remove("rotating");
-		}, (status) => {
-			judgeByHTTPStatus(status);
+		}, (status, text) => {
+			judgeByHTTPStatus(status, text);
 		});
 	}
 
@@ -185,8 +185,8 @@ window.addEventListener("load", () => {
 				loading.classList.add("off");
 				sendGetClientsRequestToNettool();
 			}, 10000);
-		}, (status) => {
-			judgeByHTTPStatus(status);
+		}, (status, text) => {
+			judgeByHTTPStatus(status, text);
 		});
 		//サーバの起動処理と並行して、Discordへのお知らせ投稿を行う
 		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/updatecheck`, "GET", null, (text) => {
@@ -194,8 +194,8 @@ window.addEventListener("load", () => {
 			if (count > 0) {
 				showMessage(`Discordに更新内容のお知らせを投稿しました。(アップデート数:${count}件)`, "info");
 			}
-		}, (status) => {
-			judgeByHTTPStatus(status);
+		}, (status, text) => {
+			judgeByHTTPStatus(status, text);
 		});
 	});
 
@@ -206,8 +206,8 @@ window.addEventListener("load", () => {
 		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/save`, "GET", null, (text) => {
 			saveButton.classList.remove("disabled");
 			loading.classList.add("off");
-		}, (status) => {
-			judgeByHTTPStatus(status);
+		}, (status, text) => {
+			judgeByHTTPStatus(status, text);
 		});
 	});
 
@@ -222,8 +222,8 @@ window.addEventListener("load", () => {
 				killButton.classList.remove("disabled");
 				loading.classList.add("off");
 				sendGetClientsRequestToNettool();
-			}, (status) => {
-				judgeByHTTPStatus(status);
+			}, (status, text) => {
+				judgeByHTTPStatus(status, text);
 			});
 		} else {
 			killButton.classList.remove("disabled");
@@ -334,8 +334,8 @@ window.addEventListener("load", () => {
 			pakAddListButton.classList.remove("disabled");
 			loading.classList.add("off");
 			Dialog.list.pakAddListDialog.functions.display(text);
-		}, (status) => {
-			judgeByHTTPStatus(status);
+		}, (status, text) => {
+			judgeByHTTPStatus(status, text);
 			pakAddListButton.classList.remove("disabled");
 		});
 	});
