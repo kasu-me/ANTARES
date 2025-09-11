@@ -3,7 +3,7 @@ session_start();
 session_regenerate_id();
 include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
 include("auth/common.php");
-$VERSION="1.0.5";
+$VERSION="1.0.6";
 ?>
 <!DOCTYPE html>
 <html lang="ja">
