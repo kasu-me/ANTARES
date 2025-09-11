@@ -10,7 +10,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	exec($process_check_command,$process_check_output);	
 	if(count($process_check_output)>0){
 		header('HTTP/1.0 409');
-		echo '{"message":"Simutransはすでに起動しています。"}';
+		echo '{"message":"Simutransはすでに起動しています。","type":"error"}';
 		exit();
 	}
 
