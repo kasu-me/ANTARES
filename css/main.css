@@ -58,6 +58,11 @@ a.link-button {
 		background-color: var(--button-active);
 	}
 
+	&:focus {
+		border: 2px solid rgba(0, 0, 0, 0.4);
+		;
+	}
+
 	&.discord {
 		--button-face: #5865eb;
 		--button-hover: #7482ff;
