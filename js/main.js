@@ -1,6 +1,13 @@
 const CURRENT_URL = new URL(location.href);
 const CURRENT_HOST = CURRENT_URL.host;
 
+function makeButtonDisable(button) {
+	button.classList.add("disabled");
+}
+function makeButtonActive(button) {
+	button.classList.remove("disabled");
+}
+
 window.addEventListener("load", () => {
 	//ローディング画面
 	const loading = document.getElementById("loading");
@@ -86,10 +93,10 @@ window.addEventListener("load", () => {
 			loading.classList.add("off");
 
 			//リロードボタンを有効化し、それ以外のボタンを無効化する
-			reloadButton.classList.remove("disabled");
+			makeButtonActive(reloadButton);
 			reloadButton.classList.remove("rotating");
-			saveButton.classList.add("disabled");
-			rebootButton.classList.add("disabled");
+			makeButtonDisable(saveButton);
+			makeButtonDisable(rebootButton);
 			//本体の応答がないせいで通信失敗している可能性があるため、強制停止ボタンは無効化しない
 			killButton?.classList?.remove("disabled");
 		});
@@ -101,7 +108,7 @@ window.addEventListener("load", () => {
 		nsStatusArea.parentNode.classList.remove("is-maintenance");
 		nsStatusArea.classList.remove("icon-bef");
 		nsStatusArea.innerText = "取得中...";
-		reloadButton.classList.add("disabled");
+		makeButtonDisable(reloadButton);
 		reloadButton.classList.add("rotating");
 		nsClientsListArea.innerHTML = "";
 		nsClientsListCount.innerText = "";
@@ -123,8 +130,8 @@ window.addEventListener("load", () => {
 				nsStatusArea.innerText = "稼働中";
 				nsStatusArea.classList.add("icon-bef");
 				nsStatusArea.setAttribute("icon", "");
-				saveButton.classList.remove("disabled");
-				rebootButton.classList.add("disabled");
+				makeButtonActive(saveButton);
+				makeButtonDisable(rebootButton);
 				killButton?.classList?.remove("disabled");
 
 				//接続者
@@ -139,28 +146,28 @@ window.addEventListener("load", () => {
 				nsStatusArea.classList.add("icon-bef");
 				nsStatusArea.setAttribute("icon", "");
 				nsStatusArea.parentNode.classList.add("is-dead");
-				saveButton.classList.add("disabled");
-				rebootButton.classList.remove("disabled");
-				killButton?.classList?.add("disabled");
+				makeButtonDisable(saveButton);
+				makeButtonActive(rebootButton);
+				makeButtonDisable(killButton);
 			} else if (result.healthStatus == "maintenance") {
 				//メンテナンス中の場合
 				nsStatusArea.innerText = "メンテナンス中";
 				nsStatusArea.classList.add("icon-bef");
 				nsStatusArea.setAttribute("icon", "");
 				nsStatusArea.parentNode.classList.add("is-maintenance");
-				saveButton.classList.add("disabled");
-				rebootButton.classList.add("disabled");
-				killButton?.classList?.add("disabled");
+				makeButtonDisable(saveButton);
+				makeButtonDisable(rebootButton);
+				makeButtonDisable(killButton);
 			}
 
 			//pakダウンロードボタンに値を設定し有効化
 			pakDownloadButton.href = result.pakLink;
-			pakDownloadButton.classList.remove("disabled");
+			makeButtonActive(pakDownloadButton);
 			pakVersion.innerText = result.pakVersion;
 
 			//ローディング画面を終了しリロードボタンを有効化
 			loading.classList.add("off");
-			reloadButton.classList.remove("disabled");
+			makeButtonActive(reloadButton);
 			reloadButton.classList.remove("rotating");
 		}, (status, text) => {
 			judgeByHTTPStatus(status, text);
@@ -176,12 +183,12 @@ window.addEventListener("load", () => {
 	//NS再起動
 	rebootButton.addEventListener("click", () => {
 		loading.classList.remove("off");
-		rebootButton.classList.add("disabled");
+		makeButtonDisable(rebootButton);
 		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/reboot`, "GET", null, (text) => {
 			//サーバの起動処理が終わるまで10秒待つ
 			//(起動前にsendGetCklientsRequestToNettoolを送るとタイムアウトする可能性があるため)
 			setTimeout(() => {
-				saveButton.classList.remove("disabled");
+				makeButtonActive(saveButton);
 				loading.classList.add("off");
 				sendGetClientsRequestToNettool();
 			}, 10000);
@@ -202,9 +209,9 @@ window.addEventListener("load", () => {
 	//保存コマンド送信
 	saveButton.addEventListener("click", () => {
 		loading.classList.remove("off");
-		saveButton.classList.add("disabled");
+		makeButtonDisable(saveButton);
 		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/save`, "GET", null, (text) => {
-			saveButton.classList.remove("disabled");
+			makeButtonActive(saveButton);
 			loading.classList.add("off");
 		}, (status, text) => {
 			judgeByHTTPStatus(status, text);
@@ -215,18 +222,18 @@ window.addEventListener("load", () => {
 	killButton?.addEventListener("click", () => {
 		if (!isAdminMode) return;
 		loading.classList.remove("off");
-		killButton.classList.add("disabled");
+		makeButtonDisable(killButton);
 		const confirmResult = confirm("本当に強制停止してもよろしいですか？サーバを停止すると全ての接続ユーザに影響し、データが失われる可能性があります。");
 		if (confirmResult) {
 			sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/kill`, "GET", null, (text) => {
-				killButton.classList.remove("disabled");
+				makeButtonActive(killButton);
 				loading.classList.add("off");
 				sendGetClientsRequestToNettool();
 			}, (status, text) => {
 				judgeByHTTPStatus(status, text);
 			});
 		} else {
-			killButton.classList.remove("disabled");
+			makeButtonActive(killButton);
 			loading.classList.add("off");
 		}
 	});
@@ -238,7 +245,7 @@ window.addEventListener("load", () => {
 			addPakDescriptionBox.value = "";
 			addPakDescriptionBox.classList.remove("has-error");
 			addedFileNameDisplayArea.innerText = "ファイルが選択されていません";
-			applicationButton.classList.add("disabled");
+			makeButtonDisable(applicationButton);
 			pakAddMessageArea.innerHTML = "";
 			Dialog.list.pakAddDialog.on();
 		},
@@ -261,9 +268,9 @@ window.addEventListener("load", () => {
 		const fileName = inputFileBox.files[0]?.name;
 		addedFileNameDisplayArea.innerText = fileName ?? "ファイルが選択されていません";
 		if (fileName == null) {
-			applicationButton.classList.add("disabled");
+			makeButtonDisable(applicationButton);
 		} else {
-			applicationButton.classList.remove("disabled");
+			makeButtonActive(applicationButton);
 		}
 	});
 
@@ -271,7 +278,7 @@ window.addEventListener("load", () => {
 	pakAddForm.addEventListener("submit", (e) => {
 		e.preventDefault();
 		loading.classList.remove("off");
-		applicationButton.classList.add("disabled");
+		makeButtonDisable(applicationButton);
 		addPakDescriptionBox.classList.remove("has-error");
 
 		const formData = new FormData();
@@ -279,12 +286,12 @@ window.addEventListener("load", () => {
 		formData.append("uploadfile", inputFileBox.files[0]);
 		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/post/addpak/`, "POST", formData, (text) => {
 			loading.classList.add("off");
-			applicationButton.classList.remove("disabled");
+			makeButtonActive(applicationButton);
 			showMessage(`Pak追加申請を送信しました。(対象ファイル:${inputFileBox.files[0].name})`, "info");
 			Dialog.list.pakAddDialog.off();
 		}, (status, text) => {
 			judgeByHTTPStatus(status, text, true, pakAddMessageArea);
-			applicationButton.classList.remove("disabled");
+			makeButtonActive(applicationButton);
 			if (status == 400 && JSON.parse(text).message.startsWith("説明")) {
 				addPakDescriptionBox.classList.add("has-error");
 				addPakDescriptionBox.focus();
@@ -328,32 +335,32 @@ window.addEventListener("load", () => {
 
 	//申請受理済Pak一覧ダイアログを開く
 	pakAddListButton.addEventListener("click", () => {
-		pakAddListButton.classList.add("disabled");
+		makeButtonDisable(pakAddListButton);
 		loading.classList.remove("off");
 		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/paklist`, "GET", null, (text) => {
-			pakAddListButton.classList.remove("disabled");
+			makeButtonActive(pakAddListButton);
 			loading.classList.add("off");
 			Dialog.list.pakAddListDialog.functions.display(text);
 		}, (status, text) => {
 			judgeByHTTPStatus(status, text);
-			pakAddListButton.classList.remove("disabled");
+			makeButtonActive(pakAddListButton);
 		});
 	});
 
 	//申請取り下げ
 	function deletePakList(fileName, deleteButton) {
-		deleteButton.classList.add("disabled");
+		makeButtonDisable(deleteButton);
 		loading.classList.remove("off");
 		const formData = new FormData();
 		formData.append("fileName", fileName);
 		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/post/deletepak/`, "POST", formData, (text) => {
 			showMessage(`Pak追加申請を取り下げました。(対象ファイル:${fileName})`, "info");
-			deleteButton.classList.remove("disabled");
+			makeButtonActive(deleteButton);
 			loading.classList.add("off");
 			Dialog.list.pakAddListDialog.off();
 		}, (status, text) => {
 			judgeByHTTPStatus(status, text);
-			deleteButton.classList.remove("disabled");
+			makeButtonActive(deleteButton);
 			Dialog.list.pakAddListDialog.off();
 		});
 	}
@@ -390,12 +397,12 @@ window.addEventListener("load", () => {
 		//ローディング画面を終了する
 		loading.classList.add("off");
 		//リロードボタンを有効化し、それ以外のボタンを無効化する
-		reloadButton.classList.remove("disabled");
+		makeButtonActive(reloadButton);
 		reloadButton.classList.remove("rotating");
 		if (!isNotAllDisableButtons) {
-			saveButton.classList.add("disabled");
-			rebootButton.classList.add("disabled");
-			killButton?.classList?.add("disabled");
+			makeButtonDisable(saveButton);
+			makeButtonDisable(rebootButton);
+			makeButtonDisable(killButton);
 		}
 	}
 
