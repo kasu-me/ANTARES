@@ -4,11 +4,13 @@ const CURRENT_HOST = CURRENT_URL.host;
 //ボタンの無効化
 function makeButtonDisable(button) {
 	button.classList.add("disabled");
+	button.setAttribute("tabindex", "-1");
 }
 
 //ボタンの有効化
 function makeButtonActive(button) {
 	button.classList.remove("disabled");
+	button.removeAttribute("tabindex");
 }
 
 //JSONとして有効かどうか判定
