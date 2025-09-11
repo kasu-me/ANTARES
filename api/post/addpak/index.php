@@ -74,7 +74,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 		$discord_webhook_body_obj->username=$SIMUTRANS_SERVER_NAME." お知らせ";
 		$discord_webhook_body_obj->avatar_url="https://".$_SERVER["SERVER_NAME"]."/img/discord_icon.png";	
 		$discord_reply="";
-		foreach ($ADMIN_DISCORD_USER_IDS as $key => $value) {
+		foreach ($ADMIN_DISCORD_USER_REPLY_TEXTS as $key => $value) {
 			$discord_reply.=$value." ";
 		}
 		$discord_webhook_body_obj->content=$discord_reply;

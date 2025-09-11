@@ -86,8 +86,8 @@ Discordサーバの名称を指定してください。任意の文字列で構�
 Discordサーバに参加している人物であるかを記録するためのセッションIDです。通常は`"isjoined".$DISCORD_GUILD_NAME`であるはずです。
 
 ### Discord Webhook関連
-#### $ADMIN_DISCORD_USER_IDS
-配列形式で、DiscordのアカウントIDを指定してください。管理者向けの通知がある場合にDiscordで送信される通知メッセージに、ここで指定したアカウントへのリプライが付けられます。
+#### $ADMIN_DISCORD_USER_REPLY_TEXTS
+配列形式で、DiscordのアカウントIDを`<@999999999999999999>`の形式で指定してください。管理者向けの通知としてDiscordで送信されるメッセージに、ここで指定したアカウントへのリプライが付けられます。
 
 `$ADMIN_USER_NAMES`で指定したユーザと同一である必要はありません。
 #### $DISCORD_WEBHOOK_URL_NOTICE_CHANNEL
@@ -112,7 +112,7 @@ DBパスワードを指定してください。
 #### $ADMIN_USER_NAMES
 配列形式です。ANTARES上で管理者権限を与えたいユーザの名前をDiscordのユーザ名で指定してください。複数人を指定することも可能です。指定する人数に上限はありませんが、管理者権限を与えるに足る人物かしっかり検討してから追加するようにしてください。
 
-`$ADMIN_DISCORD_USER_IDS`で指定したユーザと同一である必要はありません。
+`$ADMIN_DISCORD_USER_REPLY_TEXTS`で指定したユーザと同一である必要はありません。
 #### $OS_USER_NAME
 OSのユーザ名を指定してください。ここで指定されたユーザに、各種ファイルの操作権限を与えます。
 ## リリース履歴
