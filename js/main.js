@@ -1,11 +1,24 @@
 const CURRENT_URL = new URL(location.href);
 const CURRENT_HOST = CURRENT_URL.host;
 
+//ボタンの無効化
 function makeButtonDisable(button) {
 	button.classList.add("disabled");
 }
+
+//ボタンの有効化
 function makeButtonActive(button) {
 	button.classList.remove("disabled");
+}
+
+//JSONとして有効かどうか判定
+function isValidJson(text) {
+	try {
+		JSON.parse(text)
+	} catch (e) {
+		return false;
+	}
+	return true;
 }
 
 window.addEventListener("load", () => {
@@ -429,16 +442,6 @@ window.addEventListener("load", () => {
 	//メッセージをクリア
 	function clearMessage() {
 		messageArea.innerHTML = "";
-	}
-
-	//JSONとして有効かどうか判定
-	function isValidJson(text) {
-		try {
-			JSON.parse(text)
-		} catch (e) {
-			return false;
-		}
-		return true;
 	}
 
 	//初回起動時に情報を取得
