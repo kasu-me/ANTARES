@@ -46,7 +46,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 		curl_exec($ch);
 		if (curl_errno($ch)) {
 			header('HTTP/1.0 500');
-			echo "[]";
+			echo "{}";
 		}
 		curl_close($ch);
 	}
@@ -55,7 +55,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 
 }else{
 	header('HTTP/1.0 401');
-	echo "[]";
+	echo "{}";
 }
 
 ?>

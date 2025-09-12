@@ -17,7 +17,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	//プロセスが起動していない場合は起動する
 	$nettool_command='export SIMUTRANS_DIR=\''.$SIMUTRANS_DIR.'\';nohup '.$SIMUTRANS_BIN.' -server '.$SIMUTRANS_SERVER_PORT.' -server_admin_pw "'.$SIMUTRANS_ADMIN_PASSWORD.'" -objects '.$SIMUTRANS_PAKSET.' -lang '.$SIMUTRANS_LANG.' > '.$SIMUTRANS_LOG_PATH.' &';
 	exec($nettool_command,$nettool_output);
-	echo "did";	
+	header('HTTP/1.0 204');
 }else{
 	header('HTTP/1.0 401');
 	echo "{}";

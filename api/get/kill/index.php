@@ -10,6 +10,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD] && in_array($_SESSION["na
 	if(count($output)>0){
 		$pid=trim(explode(" ",preg_replace('/\s+/',' ',$output[0]))[0]);
 		exec("kill -9 ".$pid);
+		header('HTTP/1.0 204');
 	}else{
 		header('HTTP/1.0 404');
 	}
