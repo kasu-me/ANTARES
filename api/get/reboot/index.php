@@ -2,13 +2,12 @@
 session_start();
 session_regenerate_id();
 include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
+include($_SERVER["DOCUMENT_ROOT"]."/common/common.php");
 include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 
 if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	//プロセスが起動している場合は何もしない
-	$process_check_command='ps aux | grep "'.$SIMUTRANS_BIN.' -server" | grep -v grep';
-	exec($process_check_command,$process_check_output);	
-	if(count($process_check_output)>0){
+	if(isSimutransRunning()){
 		header('HTTP/1.0 409');
 		echo '{"message":"Simutransはすでに起動しています。","type":"error"}';
 		exit();
