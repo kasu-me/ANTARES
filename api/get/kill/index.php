@@ -13,6 +13,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD] && in_array($_SESSION["na
 		header('HTTP/1.0 204');
 	}else{
 		header('HTTP/1.0 404');
+		echo '{"message":"Simutransが起動していません。","type":"error"}';
 	}
 }else{
 	header('HTTP/1.0 401');
