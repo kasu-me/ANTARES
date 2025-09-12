@@ -5,6 +5,15 @@ include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
 include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 
 if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
+	//プロセスが起動していない場合は何もしない
+	$process_check_command='ps aux | grep "'.$SIMUTRANS_BIN.' -server" | grep -v grep';
+	exec($process_check_command,$process_check_output);	
+	if(count($process_check_output)==0){
+		header('HTTP/1.0 404');
+		echo '{"message":"Simutransが起動していません。","type":"error"}';
+		exit();
+	}
+	//プロセスが起動している場合は保存する
 	$nettool_command='export SIMUTRANS_DIR=\''.$SIMUTRANS_DIR.'\';'.$SIMUTRANS_NETTOOL.' -p "'.$SIMUTRANS_ADMIN_PASSWORD.'" say "20秒後にセーブを行います。";sleep 20;'.$SIMUTRANS_NETTOOL.' -p "'.$SIMUTRANS_ADMIN_PASSWORD.'" force-sync;wait;';
 	exec($nettool_command,$nettool_output);
 	header('HTTP/1.0 204');
