@@ -58,7 +58,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 		</div>
 	<?php }	else if(isLogIn() && !$_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	?>
-		<div class="message message-warn">><span class="message-content">お使いのDiscordアカウントで本システムを利用することはできません。管理者に問い合わせてください。</span></div>
+		<div class="message message-warn"><span class="message-content">お使いのDiscordアカウントで本システムを利用することはできません。管理者に問い合わせてください。</span></div>
 		<div class="foot-buttons"><a href="/auth/discord_login.php?action=logout" class="icon-bef link-button" icon="">ログアウト</a></div>
 	<?php } ?>
 	</div>
