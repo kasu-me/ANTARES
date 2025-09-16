@@ -203,6 +203,8 @@ header {
 
 #message-area {
 	margin-bottom: var(--wide-margin);
+	position: sticky;
+	top: var(--standard-margin);
 }
 
 .message {
