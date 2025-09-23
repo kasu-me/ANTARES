@@ -2,7 +2,8 @@
 session_start();
 session_regenerate_id();
 include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
-include("auth/common.php");
+include($_SERVER["DOCUMENT_ROOT"]."/common/common.php");
+include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 $VERSION="1.0.6";
 ?>
 <!DOCTYPE html>
@@ -17,7 +18,7 @@ $VERSION="1.0.6";
 <link rel="stylesheet" href="/css/main.css<?php echo "?ver=".filemtime($_SERVER['DOCUMENT_ROOT']."/css/main.css") ?>">
 <link rel="stylesheet" href="/css/dialog.css<?php echo "?ver=".filemtime($_SERVER['DOCUMENT_ROOT']."/css/dialog.css") ?>">
 <?php
-if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
+if(isLoginAndMember()){
 ?>
 <script src="/js/main.js<?php echo "?ver=".filemtime($_SERVER['DOCUMENT_ROOT']."/js/main.js") ?>"></script>
 <script src="/js/dialog.js<?php echo "?ver=".filemtime($_SERVER['DOCUMENT_ROOT']."/js/dialog.js") ?>"></script>
@@ -30,13 +31,13 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 			<h2>Ahozura-Ns Total Administration Registration and Execution System</h2>
 		</div>
 		<?php
-		if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
+		if(isLoginAndMember()){
 		?>
 			<div class="user-info">
 				<div class="icon-bef" icon=""><?php 
 				echo $_SESSION["name"];
 				?><span class="user-role"><?php 
-				if(in_array($_SESSION["name"],$ADMIN_USER_NAMES)){
+				if(isAdmin()){
 					echo "Administrator"; 
 				}else{
 					echo "Guest"; 
@@ -64,7 +65,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 	</div>
 	<main>
 		<?php
-		if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
+		if(isLoginAndMember()){
 		?>
 		<div class="loaderparent" id="loading"><div class="loader"></div></div>
 		<div id="buttons-container" class="main-panels">
@@ -114,7 +115,7 @@ if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
 		<div id="file-uploader-container" class="main-panels">
 		</div>
 		<?php 
-		if(in_array($_SESSION["name"],$ADMIN_USER_NAMES)){
+		if(isAdmin()){
 		?>
 		<div class="main-panels">
 			<h4 class="icon-bef" icon="">管理者用操作</h5>
