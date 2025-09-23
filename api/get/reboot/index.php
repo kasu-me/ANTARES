@@ -5,20 +5,18 @@ include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
 include($_SERVER["DOCUMENT_ROOT"]."/common/common.php");
 include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 
-if(isLogIn() && $_SESSION[$SESSION_ID_DETERMINE_GUILD]){
-	//プロセスが起動している場合は何もしない
-	if(isSimutransRunning()){
-		header('HTTP/1.0 409');
-		echo '{"message":"Simutransはすでに起動しています。","type":"error"}';
-		exit();
-	}
+onlyAllowAuthenticated();
 
-	//プロセスが起動していない場合は起動する
-	$nettool_command='export SIMUTRANS_DIR=\''.$SIMUTRANS_DIR.'\';nohup '.$SIMUTRANS_BIN.' -server '.$SIMUTRANS_SERVER_PORT.' -server_admin_pw "'.$SIMUTRANS_ADMIN_PASSWORD.'" -objects '.$SIMUTRANS_PAKSET.' -lang '.$SIMUTRANS_LANG.' > '.$SIMUTRANS_LOG_PATH.' &';
-	exec($nettool_command,$nettool_output);
-	header('HTTP/1.0 204');
-}else{
-	header('HTTP/1.0 401');
-	echo "{}";
+//プロセスが起動している場合は何もしない
+if(isSimutransRunning()){
+	header('HTTP/1.0 409');
+	echo '{"message":"Simutransはすでに起動しています。","type":"error"}';
+	exit();
 }
+
+//プロセスが起動していない場合は起動する
+$nettool_command='export SIMUTRANS_DIR=\''.$SIMUTRANS_DIR.'\';nohup '.$SIMUTRANS_BIN.' -server '.$SIMUTRANS_SERVER_PORT.' -server_admin_pw "'.$SIMUTRANS_ADMIN_PASSWORD.'" -objects '.$SIMUTRANS_PAKSET.' -lang '.$SIMUTRANS_LANG.' > '.$SIMUTRANS_LOG_PATH.' &';
+exec($nettool_command,$nettool_output);
+header('HTTP/1.0 204');
+
 ?>
