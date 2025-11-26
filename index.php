@@ -78,7 +78,7 @@ if(isLoginAndMember()){
 		<div id="tiles-container" class="main-panels">
 			<div class="tiles">
 				<h4 class="icon-bef" icon="">Health</h4>
-				<div id="NS-Status"></div>
+				<div id="NS-Status-container"><span id="NS-Status"></span></div>
 			</div>
 			<div class="tiles">
 				<h4 class="icon-bef" icon="">Clients</h4>
@@ -88,13 +88,13 @@ if(isLoginAndMember()){
 			<div class="tiles">
 				<h4 class="icon-bef" icon="">Paks</h4>
 				<div>
-					<a id="pak-download-link" class="icon-bef link-button disabled" icon="">ダウンロード (Ver.<span id="pak-version"></span>)</a>
+					<a id="pak-download-link" class="link-button disabled"><span class="icon-bef" icon="">ダウンロード (Ver.<span id="pak-version"></span>)</span></a>
 				</div>
 			</div>
 			<div class="tiles">
 				<h4 class="icon-bef" icon="">Latest Map</h4>
 				<div>
-					<a href="/api/get/savedata/" id="sve-download-link" class="icon-bef link-button" icon="" download="server13353-network.sve">ダウンロード</a>
+					<a href="/api/get/savedata/" id="sve-download-link" class="link-button" download="server13353-network.sve"><span class="icon-bef" icon="">ダウンロード</span></a>
 				</div>
 			</div>
 		</div>
