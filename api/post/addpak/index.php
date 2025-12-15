@@ -28,7 +28,20 @@ if(!str_ends_with($_FILES["uploadfile"]['name'],".zip")&&!str_ends_with($_FILES[
 	exit();
 }
 
-$fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$_FILES["uploadfile"]['name'];
+$filename = basename($_FILES["uploadfile"]['name']);
+if ($filename !== $_FILES["uploadfile"]['name'] || strpos($filename, '..') !== false) {
+	header('HTTP/1.0 400');
+	echo '{"message":"不正なファイル名です。","type":"error"}';
+	exit();
+}
+
+if (!preg_match('/^[a-zA-Z0-9._-]+$/', $filename)) {
+	header('HTTP/1.0 400');
+	echo '{"message":"ファイル名に使用できない文字が含まれています。使用できる文字：英数字、ドット、アンダースコア、ハイフン","type":"error"}';
+	exit();
+}
+$filename = escapeshellarg($filename);
+$fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$filename;
 
 //一時置き場にアップロードされたファイルを配置
 $result = move_uploaded_file(
@@ -44,7 +57,7 @@ foreach (explode("\n",$temporaryPakFileList) as $key => $value) {
 	if(count($addedPakInfo)!=3){
 		continue;
 	}
-	if($addedPakInfo[1]==$_FILES["uploadfile"]['name']){
+	if($addedPakInfo[1]==$filename){
 		$deleteTarget=$value;
 		break;
 	}
@@ -56,12 +69,12 @@ if($deleteTarget!=""){
 }
 
 //pak追加申請リストファイルに追記
-file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$_SESSION["name"].",".$_FILES["uploadfile"]['name'].",".$_POST["description"]."\n",FILE_APPEND);
+file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$_SESSION["name"].",".$filename.",".$_POST["description"]."\n",FILE_APPEND);
 
 //ファイル配置に成功した場合
 if( $result !== false ){
 	//ZIPの場合解凍
-	if(str_ends_with($_FILES["uploadfile"]['name'],".zip")){
+	if(str_ends_with($filename,".zip")){
 		$dir=substr($fileFullPath,0,-4);
 		exec("mkdir ".$dir);
 		exec("unzip -d ".$dir." -o ".$fileFullPath);
@@ -85,7 +98,7 @@ if( $result !== false ){
 	$fields=[[],[],[]];
 	$fields[0]["inline"]=false;
 	$fields[0]["name"]="対象ファイル";
-	$fields[0]["value"]=$_FILES["uploadfile"]['name'];
+	$fields[0]["value"]=$filename;
 	$fields[1]["inline"]=false;
 	$fields[1]["name"]="説明";
 	$fields[1]["value"]=$_POST["description"];

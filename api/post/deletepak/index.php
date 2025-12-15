@@ -18,7 +18,21 @@ if( ! isset($_POST["fileName"]) || $_POST["fileName"]=="" ){
 	exit();
 }
 
-$fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$_POST["fileName"];
+$filename = basename($_POST["fileName"]);
+if ($filename !== $_POST["fileName"] || strpos($filename, '..') !== false) {
+	header('HTTP/1.0 400');
+	echo '{"message":"不正なファイル名です。","type":"error"}';
+	exit();
+}
+
+if (!preg_match('/^[a-zA-Z0-9._-]+$/', $filename)) {
+	header('HTTP/1.0 400');
+	echo '{"message":"ファイル名に使用できない文字が含まれています。使用できる文字：英数字、ドット、アンダースコア、ハイフン","type":"error"}';
+	exit();
+}
+
+$filename = escapeshellarg($filename);
+$fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$filename;
 
 //pak追加申請リストファイルの読み込み
 $temporaryPakFileList=file_get_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH);
@@ -28,7 +42,7 @@ foreach (explode("\n",$temporaryPakFileList) as $key => $value) {
 	if(count($addedPakInfo)!=3){
 		continue;
 	}
-	if($addedPakInfo[1]==$_POST["fileName"]){
+	if($addedPakInfo[1]==$filename){
 		$deleteTarget=$value;
 		break;
 	}
@@ -46,7 +60,7 @@ file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$temporaryPakFileList);
 exec("rm -rf ".$fileFullPath);
 
 //ZIPの場合ディレクトリも削除
-if(str_ends_with($_POST["fileName"],".zip")){
+if(str_ends_with($filename,".zip")){
 	$dir=substr($fileFullPath,0,-4);
 	exec("rm -rf ".$dir);
 }
@@ -65,7 +79,7 @@ $discord_webhook_body_obj->content=$discord_reply;
 $fields=[[]];
 $fields[0]["inline"]=false;
 $fields[0]["name"]="対象ファイル";
-$fields[0]["value"]=$_POST["fileName"];
+$fields[0]["value"]=$filename;
 $discord_webhook_body_obj->embeds[0]->fields=$fields;
 
 $discord_webhook_body_json=json_encode($discord_webhook_body_obj, JSON_UNESCAPED_UNICODE);
