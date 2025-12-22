@@ -312,7 +312,7 @@ header {
 		display: flex;
 		flex-direction: column;
 
-		&.is-dead {
+		&:has(.is-dead) {
 			background-color: #ffe7e7;
 
 			& #NS-Status {
@@ -320,7 +320,7 @@ header {
 			}
 		}
 
-		&.is-maintenance {
+		&:has(.is-maintenance) {
 			background-color: #ffe816;
 
 			& #NS-Status {
