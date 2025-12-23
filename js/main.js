@@ -163,7 +163,9 @@ window.addEventListener("load", () => {
 				nsStatusArea.parentNode.classList.add("is-dead");
 				makeButtonDisable(saveButton);
 				makeButtonActive(rebootButton);
-				makeButtonDisable(killButton);
+				if (isAdminMode) {
+					makeButtonDisable(killButton);
+				}
 			} else if (result.healthStatus == "maintenance") {
 				//メンテナンス中の場合
 				nsStatusArea.innerText = "メンテナンス中";
@@ -172,7 +174,9 @@ window.addEventListener("load", () => {
 				nsStatusArea.parentNode.classList.add("is-maintenance");
 				makeButtonDisable(saveButton);
 				makeButtonDisable(rebootButton);
-				makeButtonDisable(killButton);
+				if (isAdminMode) {
+					makeButtonDisable(killButton);
+				}
 			}
 
 			//pakダウンロードボタンに値を設定し有効化
