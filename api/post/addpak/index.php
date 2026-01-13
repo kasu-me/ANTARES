@@ -40,7 +40,7 @@ if (!preg_match('/^[a-zA-Z0-9._-]+$/', $filename)) {
 	echo '{"message":"ファイル名に使用できない文字が含まれています。使用できる文字：英数字、ドット、アンダースコア、ハイフン","type":"error"}';
 	exit();
 }
-$filename = escapeshellarg($filename);
+$filename = substr(escapeshellarg($filename), 1, -1);
 $fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$filename;
 
 //一時置き場にアップロードされたファイルを配置

@@ -31,7 +31,7 @@ if (!preg_match('/^[a-zA-Z0-9._-]+$/', $filename)) {
 	exit();
 }
 
-$filename = escapeshellarg($filename);
+$filename = substr(escapeshellarg($filename), 1, -1);
 $fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$filename;
 
 //pak追加申請リストファイルの読み込み
