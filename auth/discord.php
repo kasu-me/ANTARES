@@ -3,10 +3,6 @@ include("common.php");
 include("db.php");
 include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-ini_set('max_execution_time', 300); 
-
 error_reporting(E_ALL);
 
 define('OAUTH2_CLIENT_ID', $DISCORD_OAUTH2_CLIENT_ID);
