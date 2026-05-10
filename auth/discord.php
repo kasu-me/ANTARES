@@ -19,7 +19,6 @@ $apiURLGuild = 'https://discord.com/api/users/@me/guilds';
 $revokeURL = 'https://discord.com/api/oauth2/token/revoke';
 
 session_start();
-session_regenerate_id();
 
 // ユーザーをDiscordの認証ページに転送してログインプロセスを開始
 if(get('action') == 'login') {
@@ -27,7 +26,8 @@ if(get('action') == 'login') {
 		'client_id' => OAUTH2_CLIENT_ID,
 		'redirect_uri' => 'https://'.$_SERVER["SERVER_NAME"].'/auth/discord_login.php',
 		'response_type' => 'code',
-		'scope' => 'identify guilds'
+		'scope' => 'identify guilds',
+		'state' => session_id()
 	);
 
 	// ユーザーをDiscordの認証ページにリダイレクトする
@@ -43,8 +43,12 @@ if(get('code')) {
 		'client_id' => OAUTH2_CLIENT_ID,
 		'client_secret' => OAUTH2_CLIENT_SECRET,
 		'redirect_uri' => 'https://'.$_SERVER["SERVER_NAME"].'/auth/discord_login.php',
-		'code' => get('code')
+		'code' => get('code'),
+		'state' => get('state')
 	));
+	if(!get('state') || get('state') != session_id()) {
+		die("認証プロセスに問題が発生しました。もう一度やり直してください。");
+	}
 	$logout_token = $token->access_token;
 	$_SESSION['access_token'] = $token->access_token;
 

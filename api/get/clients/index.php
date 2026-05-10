@@ -1,6 +1,6 @@
 <?php
 session_start();
-session_regenerate_id();
+session_regenerate_id(true);
 include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
 include($_SERVER["DOCUMENT_ROOT"]."/common/common.php");
 include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
