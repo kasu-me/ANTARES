@@ -42,6 +42,7 @@ if (!preg_match('/^[a-zA-Z0-9._-]+$/', $filename)) {
 }
 $filename = substr(escapeshellarg($filename), 1, -1);
 $fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$filename;
+$description=preg_replace('/[,\n]/', '', $_POST["description"]);
 
 //一時置き場にアップロードされたファイルを配置
 $result = move_uploaded_file(
@@ -69,7 +70,7 @@ if($deleteTarget!=""){
 }
 
 //pak追加申請リストファイルに追記
-file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$_SESSION["name"].",".$filename.",".$_POST["description"]."\n",FILE_APPEND);
+file_put_contents($TEMPORARY_PAK_FILE_LIST_CSV_FILE_PATH,$_SESSION["name"].",".$filename.",".$description."\n",FILE_APPEND);
 
 //ファイル配置に成功した場合
 if( $result !== false ){
@@ -101,7 +102,7 @@ if( $result !== false ){
 	$fields[0]["value"]=$filename;
 	$fields[1]["inline"]=false;
 	$fields[1]["name"]="説明";
-	$fields[1]["value"]=$_POST["description"];
+	$fields[1]["value"]=$description;
 	$fields[2]["inline"]=false;
 	$fields[2]["name"]="申請者";
 	$fields[2]["value"]=$_SESSION["name"];
