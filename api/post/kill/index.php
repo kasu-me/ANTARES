@@ -7,6 +7,12 @@ include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 
 onlyAllowAdmin();
 
+if($_SERVER["REQUEST_METHOD"]!=="POST"){
+	header('HTTP/1.0 405');
+	echo '{}';
+	exit();
+}
+
 if(isSimutransRunning()){
 	$process_check_command='ps aux | grep "'.$SIMUTRANS_BIN.' -server" | grep -v grep';
 	exec($process_check_command,$process_check_output);	

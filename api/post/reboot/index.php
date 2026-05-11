@@ -7,6 +7,12 @@ include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 
 onlyAllowAuthenticated();
 
+if($_SERVER["REQUEST_METHOD"]!=="POST"){
+	header('HTTP/1.0 405');
+	echo '{}';
+	exit();
+}
+
 //プロセスが起動している場合は何もしない
 if(isSimutransRunning()){
 	header('HTTP/1.0 409');

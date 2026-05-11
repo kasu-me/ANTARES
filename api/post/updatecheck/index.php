@@ -7,6 +7,12 @@ include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
 
 onlyAllowAuthenticated();
 
+if($_SERVER["REQUEST_METHOD"]!=="POST"){
+	header('HTTP/1.0 405');
+	echo '{}';
+	exit();
+}
+
 //更新情報を取得
 exec($UPDATE_COMMENTS_GETTER_PATH,$comments_output);
 $obj=json_decode(implode("",$comments_output));

@@ -203,7 +203,7 @@ window.addEventListener("load", () => {
 	rebootButton.addEventListener("click", () => {
 		loading.classList.remove("off");
 		makeButtonDisable(rebootButton);
-		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/reboot`, "GET", null, (text) => {
+		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/post/reboot/`, "POST", null, (text) => {
 			//サーバの起動処理が終わるまで10秒待つ
 			//(起動前にsendGetCklientsRequestToNettoolを送るとタイムアウトする可能性があるため)
 			setTimeout(() => {
@@ -215,7 +215,7 @@ window.addEventListener("load", () => {
 			judgeByHTTPStatus(status, text);
 		});
 		//サーバの起動処理と並行して、Discordへのお知らせ投稿を行う
-		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/updatecheck`, "GET", null, (text) => {
+		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/post/updatecheck/`, "POST", null, (text) => {
 			const count = JSON.parse(text).length;
 			if (count > 0) {
 				showMessage(`Discordに更新内容のお知らせを投稿しました。(アップデート数:${count}件)`, "info");
@@ -229,7 +229,7 @@ window.addEventListener("load", () => {
 	saveButton.addEventListener("click", () => {
 		loading.classList.remove("off");
 		makeButtonDisable(saveButton);
-		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/save`, "GET", null, (text) => {
+		sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/post/save/`, "POST", null, (text) => {
 			makeButtonActive(saveButton);
 			loading.classList.add("off");
 		}, (status, text) => {
@@ -244,7 +244,7 @@ window.addEventListener("load", () => {
 		makeButtonDisable(killButton);
 		const confirmResult = confirm("本当に強制停止してもよろしいですか？サーバを停止すると全ての接続ユーザに影響し、データが失われる可能性があります。");
 		if (confirmResult) {
-			sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/get/kill`, "GET", null, (text) => {
+			sendSimpleHttpRequest(`https://${CURRENT_HOST}/api/post/kill/`, "POST", null, (text) => {
 				makeButtonActive(killButton);
 				loading.classList.add("off");
 				sendGetClientsRequestToNettool();
