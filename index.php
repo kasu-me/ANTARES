@@ -4,7 +4,7 @@ session_regenerate_id(true);
 include($_SERVER["DOCUMENT_ROOT"]."/settings.php");
 include($_SERVER["DOCUMENT_ROOT"]."/common/common.php");
 include($_SERVER["DOCUMENT_ROOT"]."/auth/common.php");
-$VERSION="1.0.8";
+$VERSION="1.0.9";
 ?>
 <!DOCTYPE html>
 <html lang="ja">
