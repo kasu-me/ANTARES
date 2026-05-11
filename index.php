@@ -23,6 +23,7 @@ if(isLoginAndMember()){
 <script src="/js/main.js<?php echo "?ver=".filemtime($_SERVER['DOCUMENT_ROOT']."/js/main.js") ?>"></script>
 <script src="/js/dialog.js<?php echo "?ver=".filemtime($_SERVER['DOCUMENT_ROOT']."/js/dialog.js") ?>"></script>
 <?php } ?>
+<meta name="robots" content="noindex,nofollow">
 </head>
 <body>
 	<header>
