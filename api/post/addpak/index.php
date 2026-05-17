@@ -35,12 +35,7 @@ if ($filename !== $_FILES["uploadfile"]['name'] || strpos($filename, '..') !== f
 	exit();
 }
 
-if (!preg_match('/^[a-zA-Z0-9._-]+$/', $filename)) {
-	header('HTTP/1.0 400');
-	echo '{"message":"ファイル名に使用できない文字が含まれています。使用できる文字：英数字、ドット、アンダースコア、ハイフン","type":"error"}';
-	exit();
-}
-$filename = substr(escapeshellarg($filename), 1, -1);
+$filename = preg_replace('/[,\n\s]/', '', substr(escapeshellarg($filename), 1, -1));
 $fileFullPath=$TEMPORARY_PAK_FILE_DIRECTORY_PATH."/".$filename;
 $description=preg_replace('/[,\n]/', '', $_POST["description"]);
 
