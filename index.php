@@ -119,7 +119,7 @@ if(isLoginAndMember()){
 		if(isAdmin()){
 		?>
 		<div class="main-panels">
-			<h4 class="icon-bef" icon="">管理者用操作</h5>
+			<h4 class="icon-bef" icon="">管理者用操作</h4>
 			<div>
 				<button class="icon-bef disabled red" icon="" id="kill-button"><?php echo $SIMUTRANS_SERVER_NAME; ?>を強制停止</button>
 			</div>
